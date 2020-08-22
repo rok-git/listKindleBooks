@@ -2,8 +2,6 @@
 #import "BookEntry.h"
 
 
-NSArray *allEntries;
-
 @interface ParserDelegate : NSObject <NSXMLParserDelegate> {
     BookEntry *anEntry;
     NSMutableArray *bookEntries;       // array of (BookEntry *)
@@ -112,7 +110,7 @@ NSArray *allEntries;
         anEntry = [[BookEntry alloc] init];
     }else
     if([elementName isEqualToString: @"ASIN"]){
-        // start of a asin
+        // start of an asin
 //        NSLog(@" => start of ASIN");
         anEntry.stage = AsinStage;
     }else
@@ -122,19 +120,19 @@ NSArray *allEntries;
         anEntry.stage = TitleStage;
     }else
     if([elementName isEqualToString: @"authors"]){
-        // start of a authors
+        // start of authors
 //        NSLog(@" => start of authors");
         anEntry.stage = AuthorsStage;
         anEntry.authors = nil;
         tmpAuthor = nil;
     }else
     if([elementName isEqualToString: @"author"]){
-        // start of a authors
+        // start of an author
 //        NSLog(@" => start of author");
         anEntry.stage = AuthorStage;
     }else
     if([elementName isEqualToString: @"publishers"]){
-        // start of a publishers
+        // start of publishers
 //        NSLog(@" => start of publishers");
         anEntry.stage = PublishersStage;
         anEntry.publishers = nil;
@@ -212,7 +210,7 @@ main()
 //	NSLog(@"%@", parser);
         ParserDelegate *p = [[ParserDelegate alloc] init];
 	parser.delegate = p;
-	[parser parse]; // after parsing, allEntries contains info for all books
+	[parser parse]; // after parsing, ParserDelegate has info for all books
 
         NSFileHandle *fout = [NSFileHandle fileHandleWithStandardOutput];
 
@@ -231,6 +229,6 @@ main()
                 [fout writeData: [str dataUsingEncoding: NSUTF8StringEncoding]];
             }
         ];
-	return 0;
     }
+    return 0;
 }
