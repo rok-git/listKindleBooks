@@ -17,6 +17,12 @@ Just type `make` to build.
 
 `./listKindleBooks < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml > ./kindle.csv`
 
-or if you want to use the CSV file with Microsoft Excel in Japanese environment
+To use the CSV file with Microsoft Excel in Japanese environment
 
-`./listKindleBooks < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml | iconv -f UTF-8 -t SJIS > ./kindle.csv`
+`./listKindleBooks < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml | iconv -c -f UTF-8 -t SJIS > ./kindle.csv`
+
+or if you have nkf installed,
+
+`./listKindleBooks < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml | nkf -Ws > ./kindle.csv`
+
+I don't know well about character encoding, I think nkf is preferable than iconv.
