@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
+#import "BookEntry.h"
 
+#if 0
 typedef NS_ENUM(NSInteger, EntryStage) {
     NoStage,
     AsinStage,
@@ -33,6 +35,8 @@ typedef NS_ENUM(NSInteger, EntryStage) {
     return [super init];
 }
 @end
+
+#endif
 
 NSArray *allEntries;
 
