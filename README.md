@@ -2,8 +2,8 @@
 
 ## What?
 
-This program create a CSV file containing some info (ASIN, title, author, publisher, publicatiopn date, purchase date) for purchaesed kindle books.
-These information is picked up from the cache file Kindle.app uses (~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml).
+This program creates a CSV file containing some info (ASIN, title, author, publisher, publicatiopn date, purchase date) for purchaesed kindle books.
+These information are picked up from the cache file Kindle.app uses (~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml).
 
 ## How?
 
