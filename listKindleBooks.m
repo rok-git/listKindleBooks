@@ -20,7 +20,6 @@
 
 - (void) parserDidStartDocument: (NSXMLParser *)parser
 {
-    // do something
 //    NSLog(@"start parsing");
     bookEntries = [[NSMutableArray alloc] init];
     dateFormatter = [[NSISO8601DateFormatter alloc] init];
@@ -30,13 +29,12 @@
 - (void) parserDidEndDocument: (NSXMLParser *) parser
 {
 //    NSLog(@"finish parsing");
-//    [dateFormatter release];
 }
 
 - (void) parser: (NSXMLParser *)parser
 	 parseErrorOccurred: (NSError *) parseError
 {
-//    NSLog(@"parse error: %@", parseError);
+    NSLog(@"parse error: %@", parseError);
 }
 
 - (void) parser: (NSXMLParser *)parser foundCharacters: (NSString *)string
@@ -180,7 +178,7 @@
             }
             [anEntry.authors addObject: [NSString stringWithString: tmpAuthor]];
 //            NSLog(@"anEntry.authors %@", anEntry.authors);
-        tmpAuthor = nil;
+            tmpAuthor = nil;
         }
     }else
     if([elementName isEqualToString: @"publisher"]){
@@ -197,7 +195,7 @@
 
 @end
 
-#define StringWithArray(str) [[str componentsJoinedByString:@", "] stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""]
+#define StringWithArray(str) [[(str) componentsJoinedByString:@", "] stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""]
 
 int
 main()
@@ -207,7 +205,6 @@ main()
         NSData *data = [fin readDataToEndOfFile];
 	NSXMLParser* parser = [[NSXMLParser alloc] initWithData: data];
 
-//	NSLog(@"%@", parser);
         ParserDelegate *p = [[ParserDelegate alloc] init];
 	parser.delegate = p;
 	[parser parse]; // after parsing, ParserDelegate has info for all books
@@ -218,6 +215,7 @@ main()
             ^(BookEntry *entry, NSUInteger idx, BOOL *stop){
                 // NSLog(@"%lu: %@ %@", idx, entry.asin, entry.title);
                 NSString *str = [NSString stringWithFormat:
+                    // ASIN, title, authors, publishers, publication date, purchased date
                     @"\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"\n",
                     entry.asin,
                     [entry.title stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""],
