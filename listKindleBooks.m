@@ -210,7 +210,11 @@ main(int argc, char *argv[])
         }else{
             inputFileName = [[NSString stringWithUTF8String: argv[1]] stringByExpandingTildeInPath];
         }
-        fin = [NSFileHandle fileHandleForReadingAtPath: inputFileName];
+        if([inputFileName isEqualToString: @"-"]){
+            fin = [NSFileHandle fileHandleWithStandardInput];
+        }else{
+            fin = [NSFileHandle fileHandleForReadingAtPath: inputFileName];
+        }
         NSData *data = [fin readDataToEndOfFile];
         NSXMLParser* parser = [[NSXMLParser alloc] initWithData: data];
 
