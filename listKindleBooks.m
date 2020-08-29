@@ -197,13 +197,22 @@
 
 #define StringWithArray(str) [[(str) componentsJoinedByString:@", "] stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""]
 
+#define KindlCache @"~/Library/Application Support/Kindle/Cache/KindleSyncMetadataCache.xml"
+
 int
-main()
+main(int argc, char *argv[])
 {
+    NSString *inputFileName;
+    NSFileHandle *fin;
     @autoreleasepool{
-        NSFileHandle *fin = [NSFileHandle fileHandleWithStandardInput];
+        if(argc == 1){
+            inputFileName = [KindlCache stringByExpandingTildeInPath];
+        }else{
+            inputFileName = [[NSString stringWithUTF8String: argv[1]] stringByExpandingTildeInPath];
+        }
+        fin = [NSFileHandle fileHandleForReadingAtPath: inputFileName];
         NSData *data = [fin readDataToEndOfFile];
-	NSXMLParser* parser = [[NSXMLParser alloc] initWithData: data];
+        NSXMLParser* parser = [[NSXMLParser alloc] initWithData: data];
 
         ParserDelegate *p = [[ParserDelegate alloc] init];
 	parser.delegate = p;
