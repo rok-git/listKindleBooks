@@ -25,7 +25,7 @@ Or you can specify the file as an argument.
 
 If '-' is given as an input file name, the program read data from stdin.
 
-`listKindleBooks < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml`
+`listKindleBooks - < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml`
 
 
 To use the CSV file with Microsoft Excel in Japanese environment
