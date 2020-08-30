@@ -17,7 +17,7 @@ Just type `make` to build.
 
 If no arguments are supplied, listKindleBooks reads data from default file (~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml).
 
-`./listKindleBooks > ./kindle.csv`
+`listKindleBooks > ./kindle.csv`
 
 Or you can specify the file as an argument.
 
@@ -28,11 +28,11 @@ If '-' is given as an input file name, the program reads data from stdin.
 `listKindleBooks - < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml`
 
 
-To use the CSV file with Microsoft Excel in Japanese environment
+Apple's Numbers can read a CSV in UTF-8 encodeing (default), but To use the CSV file with Microsoft Excel in Japanese environment you have to convert encodings like below.
 
-`./listKindleBooks | iconv -c -f UTF-8 -t SJIS > ./kindle.csv`
+`listKindleBooks | iconv -c -f UTF-8 -t SJIS > ./kindle.csv`
 
-or if you have nkf installed,
+Or if you have nkf installed,
 
 `./listKindleBooks | nkf -Ws > ./kindle.csv`
 
