@@ -12,6 +12,7 @@ These information are picked up from the cache file Kindle.app uses (~/Library/A
 Xcode and xcode command-line tools must be installed.
 
 Just type `make` to build.
+Type `sudo make install` if you want to install the command at /usr/local/bin.
 
 ### How to use:
 
@@ -28,7 +29,7 @@ If '-' is given as an input file name, the program reads data from stdin.
 `listKindleBooks - < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml`
 
 
-Apple's Numbers can read a CSV in UTF-8 encodeing (default), but To use the CSV file with Microsoft Excel in Japanese environment you have to convert encodings like below.
+Apple's Numbers can read CSV files in UTF-8 encodeing (default).  But to use the CSV file with Microsoft Excel in Japanese environment you have to convert encodings like below.
 
 `listKindleBooks | iconv -c -f UTF-8 -t SJIS > ./kindle.csv`
 
