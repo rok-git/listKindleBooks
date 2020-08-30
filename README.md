@@ -15,7 +15,7 @@ Just type `make` to build.
 
 ### How to use:
 
-If no arguments are supplied, listKindleBooks read data from default file (~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml).
+If no arguments are supplied, listKindleBooks reads data from default file (~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml).
 
 `./listKindleBooks > ./kindle.csv`
 
@@ -23,7 +23,7 @@ Or you can specify the file as an argument.
 
 `listKindleBooks ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml`
 
-If '-' is given as an input file name, the program read data from stdin.
+If '-' is given as an input file name, the program reads data from stdin.
 
 `listKindleBooks - < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml`
 
@@ -36,4 +36,4 @@ or if you have nkf installed,
 
 `./listKindleBooks | nkf -Ws > ./kindle.csv`
 
-I don't know well about character encoding, I think nkf is preferable than iconv.
+I don't know well about character encodings, I think nkf is preferable than iconv.
