@@ -116,6 +116,9 @@
         // start of a title
 //        NSLog(@" => start of Title");
         anEntry.stage = TitleStage;
+        if(attributeDict && attributeDict[@"pronunciation"]){
+            anEntry.titlePron = [attributeDict[@"pronunciation"] copy];
+        }
     }else
     if([elementName isEqualToString: @"authors"]){
         // start of authors
@@ -128,6 +131,11 @@
         // start of an author
 //        NSLog(@" => start of author");
         anEntry.stage = AuthorStage;
+        if(attributeDict && attributeDict[@"pronunciation"]){
+            if(!anEntry.authorsPron)
+                anEntry.authorsPron = [[NSMutableArray alloc] init];
+            [anEntry.authorsPron addObject: attributeDict[@"pronunciation"]];
+        }
     }else
     if([elementName isEqualToString: @"publishers"]){
         // start of publishers
@@ -228,14 +236,16 @@ main(int argc, char *argv[])
             ^(BookEntry *entry, NSUInteger idx, BOOL *stop){
                 // NSLog(@"%lu: %@ %@", idx, entry.asin, entry.title);
                 NSString *str = [NSString stringWithFormat:
-                    // ASIN, title, authors, publishers, publication date, purchased date
-                    @"\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"\n",
+                    // ASIN, title, authors, publishers, publication date, purchased date, authors' pronunciation, publishers' pronunciation
+                    @"\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"\n",
                     entry.asin,
                     [entry.title stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""],
                     StringWithArray(entry.authors),
                     StringWithArray(entry.publishers),
                     entry.publicationDate,
-                    entry.purchaseDate
+                    entry.purchaseDate,
+                    entry.titlePron,
+                    StringWithArray(entry.authorsPron)
                 ];
                 [fout writeData: [str dataUsingEncoding: NSUTF8StringEncoding]];
             }
