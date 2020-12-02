@@ -223,7 +223,7 @@ void printHeader(NSFileHandle *fout)
 
 #define StringWithArray(str) [[(str) componentsJoinedByString:@", "] stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""]
 
-#define KindlCache @"~/Library/Application Support/Kindle/Cache/KindleSyncMetadataCache.xml"
+#define KindleCache @"~/Library/Application Support/Kindle/Cache/KindleSyncMetadataCache.xml"
 
 
 int
@@ -241,7 +241,7 @@ main(int argc, char *argv[])
         }
         printf("optind: %d, argc: %d\n", optind, argc);
         if(argc == optind){
-            inputFileName = [KindlCache stringByExpandingTildeInPath];
+            inputFileName = [KindleCache stringByExpandingTildeInPath];
         }else{
             inputFileName = [[NSString stringWithUTF8String: argv[optind]] stringByExpandingTildeInPath];
         }
