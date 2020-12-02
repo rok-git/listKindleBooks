@@ -1,3 +1,4 @@
+#include <unistd.h>
 #import <Foundation/Foundation.h>
 #import "BookEntry.h"
 
@@ -203,9 +204,27 @@
 
 @end
 
+void printHeader(NSFileHandle *fout)
+{
+    NSArray *headerTitles = @[
+        @"\"ASIN\"",
+        @"\"Title\"",
+        @"\"Author\"",
+        @"\"Publisher\"",
+        @"\"Date Published\"",
+        @"\"Date Purchased\"",
+        @"\"Pronunciation of Title\"",
+        @"\"Pronunciation of Author\""];
+
+    [fout writeData: [[[headerTitles componentsJoinedByString: @", "] stringByAppendingString: @"\n"] dataUsingEncoding: NSUTF8StringEncoding]];
+    return;
+}
+
+
 #define StringWithArray(str) [[(str) componentsJoinedByString:@", "] stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""]
 
 #define KindlCache @"~/Library/Application Support/Kindle/Cache/KindleSyncMetadataCache.xml"
+
 
 int
 main(int argc, char *argv[])
@@ -213,10 +232,18 @@ main(int argc, char *argv[])
     NSString *inputFileName;
     NSFileHandle *fin;
     @autoreleasepool{
-        if(argc == 1){
+        char opt;
+        int needHeader = 0;
+        while((opt = getopt(argc, argv, "h")) != -1){
+            if(opt == 'h'){
+                needHeader = 1;
+            }
+        }
+        printf("optind: %d, argc: %d\n", optind, argc);
+        if(argc == optind){
             inputFileName = [KindlCache stringByExpandingTildeInPath];
         }else{
-            inputFileName = [[NSString stringWithUTF8String: argv[1]] stringByExpandingTildeInPath];
+            inputFileName = [[NSString stringWithUTF8String: argv[optind]] stringByExpandingTildeInPath];
         }
         if([inputFileName isEqualToString: @"-"]){
             fin = [NSFileHandle fileHandleWithStandardInput];
@@ -236,7 +263,7 @@ main(int argc, char *argv[])
             ^(BookEntry *entry, NSUInteger idx, BOOL *stop){
                 // NSLog(@"%lu: %@ %@", idx, entry.asin, entry.title);
                 NSString *str = [NSString stringWithFormat:
-                    // ASIN, title, authors, publishers, publication date, purchased date, authors' pronunciation, publishers' pronunciation
+                    // ASIN, title, authors, publishers, publication date, purchased date, title's pronunciation, authors' pronunciation
                     @"\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"\n",
                     entry.asin,
                     [entry.title stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""],
@@ -247,6 +274,8 @@ main(int argc, char *argv[])
                     entry.titlePron,
                     StringWithArray(entry.authorsPron)
                 ];
+                if(needHeader) 
+                    printHeader(fout);
                 [fout writeData: [str dataUsingEncoding: NSUTF8StringEncoding]];
             }
         ];
