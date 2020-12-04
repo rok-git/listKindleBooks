@@ -179,6 +179,7 @@
     }else
     if([elementName isEqualToString: @"authors"]){
 //        NSLog(@"Authors: %@", anEntry.authors);
+//      This part is not needed because authors part of anEntry is created when an author name is read.
     }else
     if([elementName isEqualToString: @"author"]){
         if(tmpAuthor){
@@ -233,13 +234,13 @@ main(int argc, char *argv[])
     NSFileHandle *fin;
     @autoreleasepool{
         char opt;
-        int needHeader = 0;
+        BOOL needHeader = NO;
         while((opt = getopt(argc, argv, "h")) != -1){
             if(opt == 'h'){
-                needHeader = 1;
+                needHeader = YES;
             }
         }
-        printf("optind: %d, argc: %d\n", optind, argc);
+//        printf("optind: %d, argc: %d\n", optind, argc);
         if(argc == optind){
             inputFileName = [KindleCache stringByExpandingTildeInPath];
         }else{
