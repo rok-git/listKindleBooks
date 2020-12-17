@@ -260,6 +260,8 @@ main(int argc, char *argv[])
 
         NSFileHandle *fout = [NSFileHandle fileHandleWithStandardOutput];
 
+        if(needHeader)
+            printHeader(fout);
         [[(ParserDelegate *)(parser.delegate) entries] enumerateObjectsUsingBlock:
             ^(BookEntry *entry, NSUInteger idx, BOOL *stop){
                 // NSLog(@"%lu: %@ %@", idx, entry.asin, entry.title);
@@ -275,8 +277,6 @@ main(int argc, char *argv[])
                     entry.titlePron,
                     StringWithArray(entry.authorsPron)
                 ];
-                if(needHeader) 
-                    printHeader(fout);
                 [fout writeData: [str dataUsingEncoding: NSUTF8StringEncoding]];
             }
         ];
