@@ -217,7 +217,7 @@ void printHeader(NSFileHandle *fout)
         @"\"Pronunciation of Title\"",
         @"\"Pronunciation of Author\""];
 
-    [fout writeData: [[[headerTitles componentsJoinedByString: @", "] stringByAppendingString: @"\n"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [fout writeData: [[[headerTitles componentsJoinedByString: @","] stringByAppendingString: @"\n"] dataUsingEncoding: NSUTF8StringEncoding]];
     return;
 }
 
