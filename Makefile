@@ -1,8 +1,8 @@
 #CC = cc -framework Foundation
-CC = cc 
+CC = cc -arch x86_64 -arch arm64
 LDFLAGS = -framework Foundation
 #CFLAGS = -fobjc-arc -g
-CFLAGS = -fobjc-arc -arch x86_64
+CFLAGS = -fobjc-arc
 
 OBJ = BookEntry.o listKindleBooks.o
 PROG = listKindleBooks
@@ -10,7 +10,7 @@ BINDIR = /usr/local/bin
 
 $(PROG): $(OBJ)
 
-.PHONY: clean
+.PHONY: clean install
 clean:
 	rm $(PROG) $(OBJ)
 
