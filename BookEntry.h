@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, EntryStage) {
 @interface BookEntry : NSObject{
 }
 -(BookEntry *) init;
-@property NSInteger stage;
+@property EntryStage stage;
 @property (nonatomic,retain) NSString *title;
 @property (nonatomic,retain) NSString *titlePron;
 @property (nonatomic,retain) NSString *asin;
