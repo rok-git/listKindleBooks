@@ -28,8 +28,11 @@ If '-' is given as an input file name, the program reads data from stdin.
 
 `listKindleBooks - < ~/Library/Application\ Support/Kindle/Cache/KindleSyncMetadataCache.xml`
 
+Use '-h' opttion to print a header line, and use '-f "Separator"' to sepecify the field separator.
 
-Apple's Numbers can read CSV files in UTF-8 encodeing (default).  But to use the CSV file with Microsoft Excel in Japanese environment you have to convert encodings like below.
+## Others
+
+Apple's Numbers can read CSV files in the UTF-8 encodeing (default).  But to use CSV files with Microsoft Excel in Japanese environment you have to convert encodings like below.
 
 `listKindleBooks | iconv -c -f UTF-8 -t SJIS > ./kindle.csv`
 
