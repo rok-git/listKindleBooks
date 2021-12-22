@@ -205,7 +205,7 @@
 
 @end
 
-void printHeader(NSFileHandle *fout)
+void printHeader(NSFileHandle *fout, NSString *sep)
 {
     NSArray *headerTitles = @[
         @"\"ASIN\"",
@@ -217,7 +217,7 @@ void printHeader(NSFileHandle *fout)
         @"\"Pronunciation of Title\"",
         @"\"Pronunciation of Author\""];
 
-    [fout writeData: [[[headerTitles componentsJoinedByString: @","] stringByAppendingString: @"\n"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [fout writeData: [[[headerTitles componentsJoinedByString: sep] stringByAppendingString: @"\n"] dataUsingEncoding: NSUTF8StringEncoding]];
     return;
 }
 
@@ -232,19 +232,28 @@ main(int argc, char *argv[])
 {
     NSString *inputFileName;
     NSFileHandle *fin;
+    NSString *sep = @",";
     @autoreleasepool{
         char opt;
         BOOL needHeader = NO;
-        while((opt = getopt(argc, argv, "h")) != -1){
-            if(opt == 'h'){
-                needHeader = YES;
+        while((opt = getopt(argc, argv, "hf:")) != -1){
+            switch(opt){
+                case 'h':
+                    needHeader = YES;
+                    break;
+                case 'f': // fiedld separator
+                    sep = [NSString stringWithUTF8String: optarg];
+                    break;
+//                default:
+//                    usage();
             }
         }
-//        printf("optind: %d, argc: %d\n", optind, argc);
-        if(argc == optind){
+        argc -= optind;
+        argv += optind;
+        if(argc != 1){
             inputFileName = [KindleCache stringByExpandingTildeInPath];
         }else{
-            inputFileName = [[NSString stringWithUTF8String: argv[optind]] stringByExpandingTildeInPath];
+            inputFileName = [[NSString stringWithUTF8String: argv[0]] stringByExpandingTildeInPath];
         }
         if([inputFileName isEqualToString: @"-"]){
             fin = [NSFileHandle fileHandleWithStandardInput];
@@ -261,13 +270,14 @@ main(int argc, char *argv[])
         NSFileHandle *fout = [NSFileHandle fileHandleWithStandardOutput];
 
         if(needHeader)
-            printHeader(fout);
+            printHeader(fout, sep);
         [[(ParserDelegate *)(parser.delegate) entries] enumerateObjectsUsingBlock:
             ^(BookEntry *entry, NSUInteger idx, BOOL *stop){
-                // NSLog(@"%lu: %@ %@", idx, entry.asin, entry.title);
+                // Output format:
+                // ASIN, title, authors, publishers, publication date, purchased date, title's pronunciation, authors' pronunciation
+                NSString *fmt = [@"\"%@\"#\"%@\"#\"%@\"#\"%@\"#\"%@\"#\"%@\"#\"%@\"#\"%@\"\n" stringByReplacingOccurrencesOfString: @"#" withString: sep];
                 NSString *str = [NSString stringWithFormat:
-                    // ASIN, title, authors, publishers, publication date, purchased date, title's pronunciation, authors' pronunciation
-                    @"\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"\n",
+                    fmt,
                     entry.asin,
                     [entry.title stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""],
                     StringWithArray(entry.authors),
