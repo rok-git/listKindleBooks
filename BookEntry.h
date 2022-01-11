@@ -26,6 +26,6 @@ typedef NS_ENUM(NSInteger, EntryStage) {
 @property (nonatomic,retain) NSDate *publicationDate; // converted from yyyy-mm-dd%hh:mm:ss+zzzz
 @property (nonatomic,retain) NSDate *purchaseDate;
 @property (nonatomic,retain) NSString *cdeContentType;
-@property (nonatomic,retain) NSString *cntentType;
+@property (nonatomic,retain) NSString *contentType;
 @end
 
