@@ -20,9 +20,9 @@ typedef NS_ENUM(NSInteger, EntryStage) {
 @property (nonatomic,retain) NSString *title;
 @property (nonatomic,retain) NSString *titlePron;
 @property (nonatomic,retain) NSString *asin;
-@property (nonatomic,retain) NSMutableArray *authors;    // array of (NSString *)
-@property (nonatomic,retain) NSMutableArray *authorsPron; // array of (NSMutableArray *)
-@property (nonatomic,retain) NSMutableArray *publishers;    // array of (NSString *)
+@property (nonatomic,retain) NSMutableArray<NSString *> *authors;    // array of (NSString *)
+@property (nonatomic,retain) NSMutableArray<NSString *> *authorsPron; // array of (NSMutableArray *)
+@property (nonatomic,retain) NSMutableArray<NSString *> *publishers;    // array of (NSString *)
 @property (nonatomic,retain) NSDate *publicationDate; // converted from yyyy-mm-dd%hh:mm:ss+zzzz
 @property (nonatomic,retain) NSDate *purchaseDate;
 @property (nonatomic,retain) NSString *cdeContentType;

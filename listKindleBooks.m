@@ -5,16 +5,16 @@
 
 @interface ParserDelegate : NSObject <NSXMLParserDelegate> {
     BookEntry *anEntry;
-    NSMutableArray *bookEntries;       // array of (BookEntry *)
+    NSMutableArray<BookEntry *> *bookEntries;       // array of (BookEntry *)
     NSISO8601DateFormatter *dateFormatter;
     NSString *tmpAuthor;
     NSString *tmpPublisher;
 }
--(NSMutableArray *)entries;
+-(NSMutableArray<BookEntry *> *)entries;
 @end
 
 @implementation ParserDelegate
--(NSMutableArray *)entries
+-(NSMutableArray<BookEntry *> *)entries
 {
     return bookEntries;
 }
@@ -241,7 +241,7 @@ main(int argc, char *argv[])
                 case 'h':
                     needHeader = YES;
                     break;
-                case 'f': // fiedld separator
+                case 'f': // field separator
                     sep = [NSString stringWithUTF8String: optarg];
                     break;
 //                default:
