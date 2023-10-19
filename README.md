@@ -1,5 +1,7 @@
 # listKindleBooks
 
+**Notice: This program is for Kinde.app version 1.40.1 or earlier.**
+
 ## What?
 
 This program creates a CSV file containing some info (ASIN, title, author, publisher, publicatiopn date, purchase date, pronunciation of the title, pronunciation of authors) for purchaesed kindle books.
